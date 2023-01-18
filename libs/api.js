@@ -1,58 +1,65 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import {micromark} from 'micromark';
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import { micromark } from 'micromark'
+import { gfm, gfmHtml } from 'micromark-extension-gfm'
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), 'posts')
 
 export function getSortedPostsData() {
   // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory);
+  const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '');
+    const id = fileName.replace(/\.md$/, '')
 
     // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fullPath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+    const matterResult = matter(fileContents)
 
     // Combine the data with the id
     return {
       id,
       ...matterResult.data,
-    };
-  });
+    }
+  })
   // Sort posts by date
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
-      return 1;
+      return 1
     } else {
-      return -1;
+      return -1
     }
-  });
+  })
 }
 
-// export default async function markdownToHtml(markdown) {
-//   const result = await remark().use(html).process(markdown)
-//   return result.toString()
-// }
-
 /**
- * get markdown file content by id
+ * return ['id1', 'id2', ...]
  */
+export function getAllPostIds() {
+  const fileNames = fs.readdirSync(postsDirectory)
+  const ids = fileNames.map((fileName) => fileName.replace(/\.md$/, ''))
+
+  return ids
+}
+
 export function getMarkdownFileContentById(id) {
   const fileName = id + '.md'
 
-  // Read markdown file as string
-  const fullPath = path.join(postsDirectory, fileName);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const fullPath = path.join(postsDirectory, fileName)
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const matterResult = matter(fileContents)
 
-  // Use gray-matter to parse the post metadata section
-  // const matterResult = matter(fileContents);
-  const html = micromark(fileContents)
+  const file = micromark(matterResult.content, {
+    extensions: [gfm()],
+    htmlExtensions: [gfmHtml()],
+  })
 
-  return html
+  return {
+    data: matterResult.data,
+    html: String(file),
+  }
 }

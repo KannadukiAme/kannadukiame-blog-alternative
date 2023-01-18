@@ -6,9 +6,7 @@ export default function Layout({ children }) {
     <div>
       <Header />
       <div className="flex w-full">
-        <div className="container mx-auto">
-        { children }
-        </div>
+        <div className="container mx-auto mt-8 mb-[80px]">{children}</div>
       </div>
       <Footer />
     </div>

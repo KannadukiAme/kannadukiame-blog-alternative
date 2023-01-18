@@ -4,12 +4,12 @@ import { useRouter } from 'next/router'
 const nav = [
   {
     name: 'HOME',
-    href: '/'
+    href: '/',
   },
   {
     name: 'BLOG',
-    href: '/posts'
-  }
+    href: '/posts',
+  },
 ]
 
 export default function Header() {
@@ -25,7 +25,13 @@ export default function Header() {
         </div>
         <div className="flex px-2 py-2 space-x-6 items-center">
           {nav.map(({ name, href }, index) => (
-            <Link key={index} className={`text-gray-500 font-bold hover:text-sora ${router.asPath === href ? 'text-sora' : ''} `} href={href}>
+            <Link
+              key={index}
+              className={`text-gray-500 font-bold hover:text-sora ${
+                router.asPath === href ? 'text-sora' : ''
+              } `}
+              href={href}
+            >
               {name}
             </Link>
           ))}
