@@ -1,6 +1,9 @@
-import Layout from '../../components/Layout'
 import Head from 'next/head'
-import { getMarkdownFileContentById, getAllPostIds } from '../../libs/api'
+
+import Header from 'components/Header'
+import Cover from 'components/Cover'
+import Footer from 'components/Footer'
+import { getMarkdownFileContentById, getAllPostIds } from 'libs/api'
 
 /**
  * @returns paths: [{params: {id: 'id1'}}, {params: {id: 'id2'}}]
@@ -39,14 +42,27 @@ export function getStaticProps({ params }) {
  */
 export default function Post({ data, html }) {
   return (
-    <Layout>
+    <div className="grid grid-rows-[52px_minmax(340px,_calc(100vh-100px))_minmax(300px,_1fr)_120px] ">
       <Head>
         <title>{`${data.title} | KannadukiAme's Blog`}</title>
       </Head>
-      <article
-        className="prose max-w-none hover:prose-a:text-sora"
-        dangerouslySetInnerHTML={{ __html: html }}
-      ></article>
-    </Layout>
+      <Header />
+      <Cover
+        title={data.title}
+        date={data.date}
+        imageUrl={data.image_url}
+        description={data.description}
+        tags={data.tags}
+      ></Cover>
+      <div className="flex w-full">
+        <div className="container mx-auto mt-8 mb-[80px] ">
+          <article
+            className="prose max-w-none hover:prose-a:text-sora"
+            dangerouslySetInnerHTML={{ __html: html }}
+          ></article>
+        </div>
+      </div>
+      <Footer />
+    </div>
   )
 }

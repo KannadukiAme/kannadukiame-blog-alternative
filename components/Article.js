@@ -29,7 +29,6 @@ export default function Article({
           <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
           {date}
         </div>
-        {/* <div className="flex text-sm space-x-2 mb-5"><g-link className="tag" v-for="(tag, index) in post.node.tags" :key="index" :to="`/tags/${tag}`">{{ tag }}</g-link></div> */}
         <div className="flex text-lg space-x-2 mb-5">
           {tags.map((tag, index) => (
             <div className="tag" key={index}>

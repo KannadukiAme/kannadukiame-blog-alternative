@@ -5,7 +5,6 @@ module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
-    './styles/github-markdown2.css',
   ],
   theme: {
     inset: {
@@ -16,10 +15,6 @@ module.exports = {
     extend: {
       colors: {
         sora: '#58B2DC',
-      },
-      gridTemplateRows: {
-        'post-layout':
-          '52px minmax(340px, calc(100vh - 100px)) minmax(300px, 1fr) 120px',
       },
     },
   },
