@@ -1,8 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import { micromark } from 'micromark'
-import { gfm, gfmHtml } from 'micromark-extension-gfm'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import rehypeFormat from 'rehype-format'
+import rehypeStringify from 'rehype-stringify'
+import rehypeToc from '@jsdevtools/rehype-toc'
+import { toHtml } from 'hast-util-to-html'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -46,20 +53,50 @@ export function getAllPostIds() {
   return ids
 }
 
-export function getMarkdownFileContentById(id) {
+export async function getMarkdownFileContentById(id) {
   const fileName = id + '.md'
 
   const fullPath = path.join(postsDirectory, fileName)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const matterResult = matter(fileContents)
 
-  const file = micromark(matterResult.content, {
-    extensions: [gfm()],
-    htmlExtensions: [gfmHtml()],
-  })
+  let tocHtml = null
+  /**
+   * DIRTY CODE TO BE REFACTORED
+   */
+  console.time('mdToHtml')
+  await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeToc, {
+      headings: ['h1', 'h2'],
+      cssClasses: {
+        toc: 'page-outline',
+        link: 'page-link',
+      },
+      customizeTOC(toc) {
+        tocHtml = toHtml(toc)
+      },
+    })
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .process(matterResult.content)
+
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .process(matterResult.content)
+  console.timeEnd('mdToHtml')
 
   return {
     data: matterResult.data,
     html: String(file),
+    toc: tocHtml,
   }
 }

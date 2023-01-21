@@ -24,13 +24,13 @@ export async function getStaticPaths() {
   }
 }
 
-export function getStaticProps({ params }) {
-  const { data, html } = getMarkdownFileContentById(params.id)
-
+export async function getStaticProps({ params }) {
+  const { data, html, toc } = await getMarkdownFileContentById(params.id)
   return {
     props: {
       data,
       html,
+      toc,
     },
   }
 }
@@ -40,7 +40,7 @@ export function getStaticProps({ params }) {
  * @param { data, html }
  * @returns
  */
-export default function Post({ data, html }) {
+export default function Post({ data, html, toc }) {
   return (
     <div className="grid grid-rows-[68px_minmax(340px,_calc(100vh-120px))_minmax(300px,_1fr)_120px] dark:text-gray-50">
       <Head>
@@ -55,11 +55,17 @@ export default function Post({ data, html }) {
         tags={data.tags}
       ></Cover>
       <div className="flex w-full bg-white dark:bg-stone-900">
-        <div className="container mx-auto mt-8 mb-[80px] ">
-          <article
-            className="prose max-w-none hover:prose-a:text-sora dark:prose-invert"
-            dangerouslySetInnerHTML={{ __html: html }}
-          ></article>
+        <div className="container mx-auto mt-8 mb-[80px] flex flex-row">
+          <div className="basis-3/4 prose max-w-none hover:prose-a:text-sora dark:prose-invert">
+            <article
+              className="px-4"
+              dangerouslySetInnerHTML={{ __html: html }}
+            ></article>
+          </div>
+          <div className="basis-1/4 prose hover:prose-a:text-sora dark:prose-invert">
+            <h2>目录</h2>
+            <div dangerouslySetInnerHTML={{ __html: toc }}></div>
+          </div>
         </div>
       </div>
       <Footer />
