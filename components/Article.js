@@ -12,7 +12,7 @@ export default function Article({
   tags,
 }) {
   return (
-    <div className="flex bg-white my-5">
+    <div className="flex my-5">
       <div className="hidden md:block md:w-1/3">
         <Image src={imageUrl} alt={title} height={900} width={1600} />
       </div>
@@ -29,13 +29,13 @@ export default function Article({
           <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
           {date}
         </div>
-        <div className="flex text-lg space-x-2 mb-5">
+        {/* <div className="flex text-gray-400 text-base space-x-2 mb-5">
           {tags.map((tag, index) => (
-            <div className="tag" key={index}>
+            <div className="" key={index}>
               {tag}
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="text-lg leading-relaxed">{description}</div>
       </div>
     </div>

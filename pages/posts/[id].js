@@ -42,7 +42,7 @@ export function getStaticProps({ params }) {
  */
 export default function Post({ data, html }) {
   return (
-    <div className="grid grid-rows-[52px_minmax(340px,_calc(100vh-100px))_minmax(300px,_1fr)_120px] ">
+    <div className="grid grid-rows-[68px_minmax(340px,_calc(100vh-120px))_minmax(300px,_1fr)_120px] dark:text-gray-50">
       <Head>
         <title>{`${data.title} | KannadukiAme's Blog`}</title>
       </Head>
@@ -54,10 +54,10 @@ export default function Post({ data, html }) {
         description={data.description}
         tags={data.tags}
       ></Cover>
-      <div className="flex w-full">
+      <div className="flex w-full bg-white dark:bg-stone-900">
         <div className="container mx-auto mt-8 mb-[80px] ">
           <article
-            className="prose max-w-none hover:prose-a:text-sora"
+            className="prose max-w-none hover:prose-a:text-sora dark:prose-invert"
             dangerouslySetInnerHTML={{ __html: html }}
           ></article>
         </div>

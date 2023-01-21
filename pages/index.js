@@ -22,7 +22,7 @@ export default function Index({ allPostsData }) {
         <title>KannadukiAme's Blog</title>
       </Head>
       <Header />
-      <div className="flex w-full">
+      <div className="flex w-full bg-white dark:bg-stone-900 dark:text-gray-50">
         <div className="container mx-auto mt-8 mb-[80px]">
           {allPostsData.map(
             ({ id, title, date, image_url, description, tags }) => (
