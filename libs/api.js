@@ -10,8 +10,10 @@ import rehypeFormat from 'rehype-format'
 import rehypeStringify from 'rehype-stringify'
 import rehypeToc from '@jsdevtools/rehype-toc'
 import { toHtml } from 'hast-util-to-html'
+import { format } from 'date-fns'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
+const formatDateFunc = (date) => format(date, 'MMM dd, yyyy')
 
 export function getSortedPostsData() {
   // Get file names under /posts
@@ -34,13 +36,15 @@ export function getSortedPostsData() {
     }
   })
   // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1
-    } else {
-      return -1
-    }
-  })
+  return allPostsData
+    .sort((a, b) => {
+      return b.date - a.date
+    })
+    .map((data) => {
+      data.date = formatDateFunc(data.date)
+
+      return data
+    })
 }
 
 /**
@@ -55,7 +59,6 @@ export function getAllPostIds() {
 
 export async function getMarkdownFileContentById(id) {
   const fileName = id + '.md'
-
   const fullPath = path.join(postsDirectory, fileName)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const matterResult = matter(fileContents)
@@ -95,7 +98,10 @@ export async function getMarkdownFileContentById(id) {
   console.timeEnd('mdToHtml')
 
   return {
-    data: matterResult.data,
+    data: {
+      ...matterResult.data,
+      date: formatDateFunc(matterResult.data.date),
+    },
     html: String(file),
     toc: tocHtml,
   }

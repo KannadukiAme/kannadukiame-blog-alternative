@@ -41,11 +41,13 @@ export default function Header() {
               {name}
             </Link>
           ))}
-          <FontAwesomeIcon
-            icon={theme ? faSun : faMoon}
-            className="cursor-pointer"
-            onClick={() => setTheme(!theme)}
-          />
+          <div className="before:content-[''] before:mr-5 before:text-gray-500 before:border-r">
+            <FontAwesomeIcon
+              icon={theme ? faSun : faMoon}
+              className="cursor-pointer"
+              onClick={() => setTheme(!theme)}
+            />
+          </div>
         </div>
       </div>
     </div>
