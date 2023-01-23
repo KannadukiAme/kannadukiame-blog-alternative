@@ -4,8 +4,7 @@ date: 2020-09-21
 image_url: /images/subahibi/cover.jpg
 description: 电波系经典作品，集众多要素于一身，涉及文学、哲学、神学、数学、物理等超多领域的神作。
 tags:
-  - 作品
-  - 美少女游戏
+  - 游戏
 ---
 
 ## 前言

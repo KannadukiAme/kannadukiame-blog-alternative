@@ -6,7 +6,7 @@ export default function HashTag({ text, href, count = 0 }) {
   return (
     <Link className="text-base hover:text-sora hover:underline" href={href}>
       <FontAwesomeIcon className="mr-1" icon={faHashtag} />
-      {`${text} (${count})`}
+      {`${text}`}
     </Link>
   )
 }

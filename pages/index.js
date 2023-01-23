@@ -1,55 +1,27 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 import Header from 'components/Header'
-import Article from 'components/Article'
 import Footer from 'components/Footer'
 import HashTag from 'components/HashTag'
-import { getSortedPostsData } from 'libs/api'
+
+import { TAGS_LIST } from 'configs/config'
 
 export function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+  const hashTags = TAGS_LIST.map((tag) => {
+    return { text: tag, href: `/tags/${tag}` }
+  })
 
   return {
     props: {
-      allPostsData,
+      hashTags,
     },
   }
 }
 
-export default function Index({ allPostsData }) {
+export default function Index({ hashTags }) {
   const imageCoverUrl = '/images/eruruu-avatar.jpg'
-
-  const hashTags = [
-    {
-      text: '美少女',
-      href: '/tags/美少女',
-      count: 22,
-    },
-    {
-      text: '动画',
-      href: '/tags/动画',
-      count: 2,
-    },
-    {
-      text: '游戏',
-      href: '/tags/动画',
-      count: 3,
-    },
-    {
-      text: '轻小说',
-      href: '/tags/动画',
-      count: 1,
-    },
-    {
-      text: '漫画',
-      href: '/tags/动画',
-      count: 2,
-    },
-  ]
 
   return (
     <div>
