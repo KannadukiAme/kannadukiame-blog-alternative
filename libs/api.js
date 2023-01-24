@@ -9,6 +9,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypeFormat from 'rehype-format'
 import rehypeStringify from 'rehype-stringify'
 import rehypeToc from '@jsdevtools/rehype-toc'
+import rehypeRewrite from 'rehype-rewrite'
 import { toHtml } from 'hast-util-to-html'
 import { format } from 'date-fns'
 
@@ -64,11 +65,9 @@ export async function getMarkdownFileContentById(id) {
   const matterResult = matter(fileContents)
 
   let tocHtml = null
-  /**
-   * DIRTY CODE TO BE REFACTORED
-   */
-  console.time('mdToHtml')
-  await unified()
+  const timeTag = `from ${fileName} to html time`
+  console.time(timeTag)
+  const file = await unified()
     .use(remarkParse)
     .use(remarkRehype)
     .use(rehypeSlug)
@@ -76,26 +75,23 @@ export async function getMarkdownFileContentById(id) {
     .use(rehypeToc, {
       headings: ['h1', 'h2'],
       cssClasses: {
-        toc: 'page-outline',
-        link: 'page-link',
+        toc: 'toc',
       },
       customizeTOC(toc) {
         tocHtml = toHtml(toc)
       },
     })
+    .use(rehypeRewrite, {
+      rewrite: (node, index, parent) => {
+        if (node.type === 'element' && node.properties.className === 'toc') {
+          parent.children.splice(index, 1)
+        }
+      },
+    })
     .use(rehypeFormat)
     .use(rehypeStringify)
     .process(matterResult.content)
-
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-    .process(matterResult.content)
-  console.timeEnd('mdToHtml')
+  console.timeEnd(timeTag)
 
   return {
     data: {
