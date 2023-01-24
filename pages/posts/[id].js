@@ -4,6 +4,7 @@ import Header from 'components/Header'
 import Cover from 'components/Cover'
 import Footer from 'components/Footer'
 import { getMarkdownFileContentById, getAllPostIds } from 'libs/api'
+import { siteConfigs } from 'configs/config'
 
 /**
  * @returns paths: [{params: {id: 'id1'}}, {params: {id: 'id2'}}]
@@ -44,7 +45,7 @@ export default function Post({ data, html, toc }) {
   return (
     <div className="grid grid-rows-[68px_minmax(340px,_calc(100vh-120px))_minmax(300px,_1fr)_120px] dark:text-gray-50">
       <Head>
-        <title>{`${data.title} | KannadukiAme's Blog`}</title>
+        <title>{`${data.title} | ${siteConfigs.title}`}</title>
       </Head>
       <Header />
       <Cover
@@ -55,16 +56,15 @@ export default function Post({ data, html, toc }) {
         tags={data.tags}
       ></Cover>
       <div className="flex w-full bg-white dark:bg-stone-900">
-        <div className="container mx-auto mt-8 mb-[80px] flex flex-row">
+        <div className="container mx-auto mt-8 mb-[80px] flex flex-row gap-10">
           <div className="basis-3/4 prose max-w-none hover:prose-a:text-sora dark:prose-invert">
-            <article
-              className="px-4"
-              dangerouslySetInnerHTML={{ __html: html }}
-            ></article>
+            <article dangerouslySetInnerHTML={{ __html: html }}></article>
           </div>
           <div className="basis-1/4 prose hover:prose-a:text-sora dark:prose-invert">
-            <h2>目录</h2>
-            <div dangerouslySetInnerHTML={{ __html: toc }}></div>
+            <div className="sticky top-4 ">
+              <h2>目录</h2>
+              <div dangerouslySetInnerHTML={{ __html: toc }}></div>
+            </div>
           </div>
         </div>
       </div>

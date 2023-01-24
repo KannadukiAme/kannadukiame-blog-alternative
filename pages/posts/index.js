@@ -4,6 +4,7 @@ import Header from 'components/Header'
 import PostItem from 'components/PostItem'
 import Footer from 'components/Footer'
 import { getSortedPostsData } from 'libs/api'
+import { siteConfigs } from 'configs/config'
 
 export function getStaticProps() {
   const allPostsData = getSortedPostsData()
@@ -19,7 +20,7 @@ export default function Index({ allPostsData }) {
   return (
     <div>
       <Head>
-        <title>BLOG | KannadukiAme's Blog</title>
+        <title>{`BLOG | ${siteConfigs.title}`}</title>
       </Head>
       <Header />
       <div className="flex w-full bg-white dark:bg-stone-900 dark:text-gray-50">

@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
-import { TAGS_LIST } from 'configs/config'
+import { TAGS_LIST, siteConfigs } from 'configs/config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHammer } from '@fortawesome/free-solid-svg-icons'
 
@@ -36,7 +36,7 @@ export default function Tag({ tag }) {
   return (
     <div>
       <Head>
-        <title>{`Tag:${tag} | KannadukiAme's Blog`}</title>
+        <title>{`Tag:${tag} | ${siteConfigs.title}`}</title>
       </Head>
       <Header />
       <div className="flex w-full bg-white dark:bg-stone-900 dark:text-gray-50">

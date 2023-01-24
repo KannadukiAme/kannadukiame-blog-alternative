@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import HashTag from './HashTag'
 
 export default function Cover({ title, date, imageUrl, description, tags }) {
   return (
@@ -14,16 +14,10 @@ export default function Cover({ title, date, imageUrl, description, tags }) {
             {title}
           </div>
           <div className="text-base text-right font-bold mt-8">{date}</div>
-          <div className="flex space-x-2 justify-center">
-            {/* {tags.map((tag, index) => (
-              <Link
-                className="tag--white text-base font-bold"
-                key={index}
-                href={`/tags/${tag}`}
-              >
-                {tag}
-              </Link>
-            ))} */}
+          <div className="flex justify-center gap-[2rem]">
+            {tags.map((tag, index) => (
+              <HashTag key={index} text={tag} href={`/tags/${tag}`} />
+            ))}
           </div>
           <div className="text-xl md:text-2xl font-bold mt-12">
             {description}

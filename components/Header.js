@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { ThemeContext } from '/components/Contexts.js'
+import { siteConfigs } from 'configs/config'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons'
@@ -26,7 +27,7 @@ export default function Header() {
       <div className="flex inset-x-0 container mx-auto justify-between z-10">
         <div className="flex px-2 py-4 space-x-6">
           <div className="text-gray-900 dark:text-gray-50 text-3xl font-bold">
-            KannadukiAme's Blog
+            {siteConfigs.title}
           </div>
         </div>
         <div className="flex px-2 py-2 space-x-6 items-center text-gray-800 dark:text-gray-100">

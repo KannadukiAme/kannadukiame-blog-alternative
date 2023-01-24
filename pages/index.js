@@ -6,7 +6,8 @@ import Header from 'components/Header'
 import Footer from 'components/Footer'
 import HashTag from 'components/HashTag'
 
-import { TAGS_LIST } from 'configs/config'
+import { TAGS_LIST, siteConfigs } from 'configs/config'
+import avatar from '/public/images/eruruu-avatar.jpg'
 
 export function getStaticProps() {
   const hashTags = TAGS_LIST.map((tag) => {
@@ -21,12 +22,10 @@ export function getStaticProps() {
 }
 
 export default function Index({ hashTags }) {
-  const imageCoverUrl = '/images/eruruu-avatar.jpg'
-
   return (
     <div>
       <Head>
-        <title>KannadukiAme's Blog</title>
+        <title>{siteConfigs.title}</title>
       </Head>
       <Header />
       <div className="flex w-full bg-white dark:bg-stone-900 dark:text-gray-50">
@@ -34,10 +33,9 @@ export default function Index({ hashTags }) {
           <div className="flex justify-center gap-[3rem]">
             <Image
               className="rounded-full w-[200px]"
-              src={imageCoverUrl}
+              src={avatar}
+              placeholder="blur"
               alt={'eruruu'}
-              width={1000}
-              height={1000}
             />
             <div className="flex flex-col gap-4">
               <h1 className="text-5xl text-sora font-bold">雨的小屋</h1>
