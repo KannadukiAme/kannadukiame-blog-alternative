@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import HashTag from 'components/HashTag'
-
 import { TAGS_LIST, siteConfigs } from 'configs/config'
 import avatar from '/public/images/eruruu-avatar.jpg'
 
@@ -37,17 +36,17 @@ export default function Index({ hashTags }) {
               placeholder="blur"
               alt={'eruruu'}
             />
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-8">
               <h1 className="text-5xl text-sora font-bold">雨的小屋</h1>
               <span className="text-xl text-gray-500">
                 一些美少女赏析及杂谈、动画漫画游戏轻小说等原作和改编作的品鉴...
               </span>
               <div>
                 <Link
-                  className="text-6xl inline hover:text-sora hover:underline"
+                  className="text-3xl inline hover:text-sora hover:underline"
                   href={'/posts'}
                 >
-                  NEXT...
+                  开始阅读...
                 </Link>
               </div>
             </div>
