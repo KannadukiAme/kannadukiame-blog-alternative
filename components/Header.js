@@ -2,10 +2,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { ThemeContext } from '/components/Contexts.js'
+import { Autocomplete } from '/components/Autocomplete'
+import { SearchItem } from '/components/SearchItem'
 import { siteConfigs } from 'configs/config'
-
+import { getAlgoliaResults } from '@algolia/autocomplete-js'
+import algoliasearch from 'algoliasearch'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons'
+import '@algolia/autocomplete-theme-classic'
 
 const nav = [
   {
@@ -17,6 +21,11 @@ const nav = [
     href: '/posts',
   },
 ]
+
+const searchClient = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOIA_APPLICATION_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY
+)
 
 export default function Header() {
   const router = useRouter()
@@ -31,6 +40,32 @@ export default function Header() {
           </div>
         </div>
         <div className="flex px-2 py-2 space-x-6 items-center text-gray-800 dark:text-gray-100">
+          <div>
+            <Autocomplete
+              openOnFocus={true}
+              getSources={({ query }) => [
+                {
+                  sourceId: 'products',
+                  getItems() {
+                    return getAlgoliaResults({
+                      searchClient,
+                      queries: [
+                        {
+                          indexName: 'posts',
+                          query,
+                        },
+                      ],
+                    })
+                  },
+                  templates: {
+                    item({ item, components }) {
+                      return <SearchItem hit={item} components={components} />
+                    },
+                  },
+                },
+              ]}
+            />
+          </div>
           {nav.map(({ name, href }, index) => (
             <Link
               key={index}
