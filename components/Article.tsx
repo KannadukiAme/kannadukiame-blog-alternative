@@ -2,6 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
+import { format } from 'date-fns'
+
+import PostType from 'types/post'
 
 export default function Article({
   id,
@@ -10,7 +13,7 @@ export default function Article({
   imageUrl,
   description,
   tags,
-}) {
+}: PostType) {
   return (
     <div className="flex my-5">
       <div className="hidden md:block md:w-1/3">
@@ -27,7 +30,7 @@ export default function Article({
         </div>
         <div className="mb-2 text-gray-400 text-lg">
           <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
-          {date}
+          <div>{format(date, 'MMM dd, yyyy')}</div>
         </div>
         {/* <div className="flex text-gray-400 text-base space-x-2 mb-5">
           {tags.map((tag, index) => (

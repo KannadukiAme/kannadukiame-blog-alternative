@@ -11,15 +11,15 @@ import rehypeStringify from 'rehype-stringify'
 import rehypeToc from '@jsdevtools/rehype-toc'
 import rehypeRewrite from 'rehype-rewrite'
 import { toHtml } from 'hast-util-to-html'
-import { format } from 'date-fns'
+
+import PostType from 'types/post'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
-const formatDateFunc = (date) => format(date, 'MMM dd, yyyy')
 
 export function getSortedPostsData() {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames.map((fileName) => {
+  const allPostsData: Array<PostType> = fileNames.map((fileName) => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '')
 
@@ -33,19 +33,15 @@ export function getSortedPostsData() {
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data,
+      title: matterResult.data.title as string,
+      date: new Date(matterResult.data.date).getTime() as number,
+      imageUrl: matterResult.data.image_url as string,
+      description: matterResult.data.description as string,
+      tags: matterResult.data.tags as Array<string>,
     }
   })
   // Sort posts by date
-  return allPostsData
-    .sort((a, b) => {
-      return b.date - a.date
-    })
-    .map((data) => {
-      data.date = formatDateFunc(data.date)
-
-      return data
-    })
+  return allPostsData.sort((a, b) => b.date - a.date)
 }
 
 /**
@@ -58,13 +54,21 @@ export function getAllPostIds() {
   return ids
 }
 
-export async function getMarkdownFileContentById(id) {
+type MarkdownData = {
+  post: PostType
+  html: string
+  toc: string
+}
+
+export async function getMarkdownFileContentById(
+  id: string
+): Promise<MarkdownData> {
   const fileName = id + '.md'
   const fullPath = path.join(postsDirectory, fileName)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const matterResult = matter(fileContents)
 
-  let tocHtml = null
+  let tocHtml: string = ''
   const timeTag = `from ${fileName} to html time`
   console.time(timeTag)
   const file = await unified()
@@ -77,14 +81,18 @@ export async function getMarkdownFileContentById(id) {
       cssClasses: {
         toc: 'toc',
       },
-      customizeTOC(toc) {
+      customizeTOC(toc: any) {
         tocHtml = toHtml(toc)
       },
-    })
+    } as any)
     .use(rehypeRewrite, {
       rewrite: (node, index, parent) => {
-        if (node.type === 'element' && node.properties.className === 'toc') {
-          parent.children.splice(index, 1)
+        if (
+          node.type === 'element' &&
+          node.properties &&
+          node.properties.className === 'toc'
+        ) {
+          parent?.children.splice(index || 0, 1)
         }
       },
     })
@@ -94,9 +102,13 @@ export async function getMarkdownFileContentById(id) {
   console.timeEnd(timeTag)
 
   return {
-    data: {
-      ...matterResult.data,
-      date: formatDateFunc(matterResult.data.date),
+    post: {
+      id,
+      title: matterResult.data.title,
+      date: new Date(matterResult.data.date).getTime(),
+      imageUrl: matterResult.data.image_url,
+      description: matterResult.data.description,
+      tags: matterResult.data.tags,
     },
     html: String(file),
     toc: tocHtml,

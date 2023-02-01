@@ -5,6 +5,19 @@ import Cover from 'components/Cover'
 import Footer from 'components/Footer'
 import { getMarkdownFileContentById, getAllPostIds } from 'libs/api'
 import { siteConfigs } from 'configs/config'
+import PostType from 'types/post'
+
+type Props = {
+  post: PostType
+  html: string
+  toc: string
+}
+
+type Params = {
+  params: {
+    id: string
+  }
+}
 
 /**
  * @returns paths: [{params: {id: 'id1'}}, {params: {id: 'id2'}}]
@@ -25,35 +38,30 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
-  const { data, html, toc } = await getMarkdownFileContentById(params.id)
+export async function getStaticProps({ params }: Params) {
+  const { post, html, toc } = await getMarkdownFileContentById(params.id)
   return {
     props: {
-      data,
+      post,
       html,
       toc,
     },
   }
 }
 
-/**
- *
- * @param { data, html }
- * @returns
- */
-export default function Post({ data, html, toc }) {
+export default function Post({ post, html, toc }: Props) {
   return (
     <div className="grid grid-rows-[68px_minmax(340px,_calc(100vh-120px))_minmax(300px,_1fr)_120px] dark:text-gray-50">
       <Head>
-        <title>{`${data.title} | ${siteConfigs.title}`}</title>
+        <title>{`${post.title} | ${siteConfigs.title}`}</title>
       </Head>
       <Header />
       <Cover
-        title={data.title}
-        date={data.date}
-        imageUrl={data.image_url}
-        description={data.description}
-        tags={data.tags}
+        title={post.title}
+        date={post.date}
+        imageUrl={post.imageUrl}
+        description={post.description}
+        tags={post.tags}
       ></Cover>
       <div className="flex w-full bg-white dark:bg-stone-900">
         <div className="container mx-auto mt-8 mb-[80px] flex flex-row gap-10">

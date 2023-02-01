@@ -8,6 +8,15 @@ import HashTag from 'components/HashTag'
 import { TAGS_LIST, siteConfigs } from 'configs/config'
 import avatar from '/public/images/eruruu-avatar.jpg'
 
+type Tag = {
+  text: string
+  href: string
+}
+
+type Props = {
+  hashTags: Array<Tag>
+}
+
 export function getStaticProps() {
   const hashTags = TAGS_LIST.map((tag) => {
     return { text: tag, href: `/tags/${tag}` }
@@ -20,7 +29,7 @@ export function getStaticProps() {
   }
 }
 
-export default function Index({ hashTags }) {
+export default function Index({ hashTags }: Props) {
   return (
     <div>
       <Head>
@@ -53,12 +62,7 @@ export default function Index({ hashTags }) {
           </div>
           <div className="flex justify-center gap-[3rem] mt-[2rem]">
             {hashTags.map((tag, index) => (
-              <HashTag
-                key={index}
-                text={tag.text}
-                href={tag.href}
-                count={tag.count}
-              />
+              <HashTag key={index} text={tag.text} href={tag.href} />
             ))}
           </div>
         </div>

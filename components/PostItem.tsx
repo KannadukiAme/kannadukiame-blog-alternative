@@ -1,16 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { format } from 'date-fns'
 
-import Tag from '/components/Tag'
+import Tag from 'components/Tag'
+import PostType from 'types/post'
 
 export default function PostItem({
   id,
   title,
   date,
   imageUrl,
-  description,
   tags,
-}) {
+}: PostType) {
   return (
     <div className="flex flex-col gap-4 border">
       <Image src={imageUrl} alt={title} height={900} width={1600} />
@@ -25,7 +26,9 @@ export default function PostItem({
       >
         {title}
       </Link>
-      <div className="text-sm text-gray-400 ml-4 mb-4">{date}</div>
+      <div className="text-sm text-gray-400 ml-4 mb-4">
+        {format(date, 'MMM dd, yyyy')}
+      </div>
     </div>
   )
 }

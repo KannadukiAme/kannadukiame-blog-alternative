@@ -1,10 +1,20 @@
 import Head from 'next/head'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHammer } from '@fortawesome/free-solid-svg-icons'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { TAGS_LIST, siteConfigs } from 'configs/config'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHammer } from '@fortawesome/free-solid-svg-icons'
+
+type Params = {
+  params: {
+    tag: string
+  }
+}
+
+type Props = {
+  tag: string
+}
 
 /**
  * @returns paths: [{params: {tag: 'tag1'}}, {params: {tag: 'tag2'}}]
@@ -24,7 +34,7 @@ export async function getStaticPaths() {
   }
 }
 
-export function getStaticProps({ params }) {
+export function getStaticProps({ params }: Params) {
   return {
     props: {
       tag: params.tag,
@@ -32,7 +42,7 @@ export function getStaticProps({ params }) {
   }
 }
 
-export default function Tag({ tag }) {
+export default function Tag({ tag }: Props) {
   return (
     <div>
       <Head>
