@@ -1,6 +1,6 @@
 # kannadukiame-blog-alternative
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5924ad74-bed1-44f6-8c3d-87f65e371d76/deploy-status)](https://app.netlify.com/sites/kannadukiame/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5924ad74-bed1-44f6-8c3d-87f65e371d76/deploy-status)](https://app.netlify.com/sites/kannadukiame-alter/deploys)
 
 KannadukiAme's Blog Alternative
 
