@@ -1,10 +1,10 @@
-# kannadukiame-blog
+# kannadukiame-blog-alternative
 
-![Netlify](https://img.shields.io/netlify/5924ad74-bed1-44f6-8c3d-87f65e371d76?style=flat-square) ![Website](https://img.shields.io/website?down_color=red&style=flat-square&url=https%3A%2F%2Fkannadukiame.netlify.app%2F) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/KannadukiAme/kannadukiame-blog/master?style=flat-square)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5924ad74-bed1-44f6-8c3d-87f65e371d76/deploy-status)](https://app.netlify.com/sites/kannadukiame/deploys)
 
-KannadukiAme's Blog
+KannadukiAme's Blog Alternative
 
-雨的小屋
+終末はここを避難所として生き延びるかな
 
 ## How to use it
 
