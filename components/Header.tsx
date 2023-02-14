@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons'
 import '@algolia/autocomplete-theme-classic'
 
 import { siteConfigs } from 'configs/config'

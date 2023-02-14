@@ -5,6 +5,7 @@ specifiers:
   '@algolia/autocomplete-theme-classic': ^1.7.4
   '@algolia/client-search': ^4.14.3
   '@fortawesome/fontawesome-svg-core': ^6.2.1
+  '@fortawesome/free-regular-svg-icons': ^6.3.0
   '@fortawesome/free-solid-svg-icons': ^6.2.1
   '@fortawesome/react-fontawesome': ^0.2.0
   '@jsdevtools/rehype-toc': ^3.0.2
@@ -38,6 +39,7 @@ dependencies:
   '@algolia/autocomplete-theme-classic': 1.7.4
   '@algolia/client-search': 4.14.3
   '@fortawesome/fontawesome-svg-core': 6.2.1
+  '@fortawesome/free-regular-svg-icons': 6.3.0
   '@fortawesome/free-solid-svg-icons': 6.2.1
   '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
   '@jsdevtools/rehype-toc': 3.0.2
@@ -206,12 +208,26 @@ packages:
     requiresBuild: true
     dev: false
 
+  /@fortawesome/fontawesome-common-types/6.3.0:
+    resolution: {integrity: sha512-4BC1NMoacEBzSXRwKjZ/X/gmnbp/HU5Qqat7E8xqorUtBFZS+bwfGH5/wqOC2K6GV0rgEobp3OjGRMa5fK9pFg==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
+
   /@fortawesome/fontawesome-svg-core/6.2.1:
     resolution: {integrity: sha512-HELwwbCz6C1XEcjzyT1Jugmz2NNklMrSPjZOWMlc+ZsHIVk+XOvOXLGGQtFBwSyqfJDNgRq4xBCwWOaZ/d9DEA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.2.1
+    dev: false
+
+  /@fortawesome/free-regular-svg-icons/6.3.0:
+    resolution: {integrity: sha512-cZnwiVHZ51SVzWHOaNCIA+u9wevZjCuAGSvSYpNlm6A4H4Vhwh8481Bf/5rwheIC3fFKlgXxLKaw8Xeroz8Ntg==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.3.0
     dev: false
 
   /@fortawesome/free-solid-svg-icons/6.2.1:
